@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lightweight Workflow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Prevent text selection while dragging */
+        .thought-box textarea {
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="tutorial-modal" class="modal">
+        <div class="modal-content">
+            <h2>Welcome to Lightweight Workflow!</h2>
+            <div class="tutorial-steps">
+                <div class="step">
+                    <h3>1. Creating Tasks</h3>
+                    <p>Double-click anywhere on the canvas to create a new task box</p>
+                </div>
+                <div class="step">
+                    <h3>2. Moving Tasks</h3>
+                    <p>Click and drag boxes to move them around</p>
+                </div>
+                <div class="step">
+                    <h3>3. Connecting Tasks</h3>
+                    <p>Hold Ctrl and click two boxes to connect them with an arrow</p>
+                </div>
+                <div class="step">
+                    <h3>4. Deleting</h3>
+                    <p>Right-click a box to delete it and its connections</p>
+                </div>
+            </div>
+            <button id="start-button">Got it, let's start!</button>
+            <label class="dont-show">
+                <input type="checkbox" id="dont-show-again">
+                Don't show this again
+            </label>
+        </div>
+    </div>
+    <div id="help-button">?</div>
+    <div id="canvas">
+        <!-- Tasks will be added here -->
+    </div>
+    <button id="generate-list-button">Generate To-Do List</button>
+    <div id="todo-modal" class="todo-modal">
+        <div class="modal-content">
+            <h2>Your To-Do List</h2>
+            <div id="todo-list-container">
+                <!-- List will be generated here -->
+            </div>
+            <button id="close-todo-button" id="start-button">Close</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html> 
