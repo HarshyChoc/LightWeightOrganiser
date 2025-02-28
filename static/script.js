@@ -15,8 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const dontShowCheckbox = document.getElementById('dont-show-again');
     const helpButton = document.getElementById('help-button');
 
-    // Check if we should show the tutorial
-    if (!localStorage.getItem('tutorialSeen')) {
+    // Initial check for tutorial display
+    if (localStorage.getItem('tutorialSeen') === 'true') {
+        modal.style.display = 'none';
+    } else {
         showTutorial();
     }
 
@@ -574,4 +576,141 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Add save functionality
+    function saveState() {
+        const boxes = Array.from(document.querySelectorAll('.thought-box')).map(box => ({
+            left: box.style.left,
+            top: box.style.top,
+            text: box.querySelector('textarea').value,
+            isSubtask: box.getAttribute('data-is-subtask')
+        }));
+
+        const savedConnections = connections.map(conn => ({
+            startIndex: Array.from(document.querySelectorAll('.thought-box')).indexOf(conn.start),
+            endIndex: Array.from(document.querySelectorAll('.thought-box')).indexOf(conn.end)
+        }));
+
+        localStorage.setItem('boxes', JSON.stringify(boxes));
+        localStorage.setItem('connections', JSON.stringify(savedConnections));
+    }
+
+    // Load saved state
+    function loadState() {
+        const savedBoxes = JSON.parse(localStorage.getItem('boxes') || '[]');
+        const savedConnections = JSON.parse(localStorage.getItem('connections') || '[]');
+
+        // Create boxes
+        savedBoxes.forEach(boxData => {
+            const box = document.createElement('div');
+            box.className = 'thought-box';
+            box.style.left = boxData.left;
+            box.style.top = boxData.top;
+            box.setAttribute('data-is-subtask', boxData.isSubtask);
+
+            const textarea = document.createElement('textarea');
+            textarea.value = boxData.text;
+            box.appendChild(textarea);
+
+            // Add all the existing event listeners
+            box.addEventListener('mousedown', function(e) {
+                if (!e.ctrlKey) {
+                    startDragging(e);
+                }
+            });
+            
+            box.addEventListener('mousedown', function(e) {
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleConnection(e, box);
+                }
+            });
+
+            box.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                if (selectedBox === box) {
+                    selectedBox = null;
+                }
+                deleteBox(box);
+            });
+
+            canvas.appendChild(box);
+        });
+
+        // Recreate connections
+        const boxes = document.querySelectorAll('.thought-box');
+        savedConnections.forEach(conn => {
+            createConnection(
+                Array.from(boxes)[conn.startIndex],
+                Array.from(boxes)[conn.endIndex]
+            );
+        });
+    }
+
+    // Load saved state when page loads
+    loadState();
+
+    // Save state when changes occur
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    const saveStateDebounced = debounce(saveState, 1000);
+
+    // Save after any changes
+    canvas.addEventListener('mouseup', saveStateDebounced);
+    document.addEventListener('keyup', saveStateDebounced);
+
+    // Update deleteBox function to save state after deletion
+    const originalDeleteBox = deleteBox;
+    deleteBox = function(box) {
+        originalDeleteBox(box);
+        saveStateDebounced();
+    };
+
+    // Update createConnection function to save state after connection
+    const originalCreateConnection = createConnection;
+    createConnection = function(start, end) {
+        originalCreateConnection(start, end);
+        saveStateDebounced();
+    };
+
+    // Update deleteConnection function to save state after deletion
+    const originalDeleteConnection = deleteConnection;
+    deleteConnection = function(connection) {
+        originalDeleteConnection(connection);
+        saveStateDebounced();
+    };
+
+    // Save tutorial preference when user checks "Don't show again"
+    startButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+        if (dontShowCheckbox.checked) {
+            localStorage.setItem('tutorialSeen', 'true');
+        }
+    });
+
+    // Add clear functionality to Ctrl+X
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'x') {
+            e.preventDefault();
+            connections.forEach(conn => conn.line.remove());
+            connections = [];
+            const boxes = document.querySelectorAll('.thought-box');
+            boxes.forEach(box => box.remove());
+            selectedBox = null;
+            // Clear local storage when clearing the board
+            localStorage.removeItem('boxes');
+            localStorage.removeItem('connections');
+        }
+    });
 }); 
