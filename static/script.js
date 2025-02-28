@@ -319,6 +319,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Add this inside your DOMContentLoaded event listener, near the other keyboard event listeners
+    document.addEventListener('keydown', function(e) {
+        // Check for Ctrl+X (or Cmd+X on Mac)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'x') {
+            e.preventDefault(); // Prevent default cut behavior
+            
+            // Remove all connections
+            connections.forEach(conn => {
+                conn.line.remove();
+            });
+            connections = [];
+            
+            // Remove all boxes
+            const boxes = document.querySelectorAll('.thought-box');
+            boxes.forEach(box => box.remove());
+            
+            // Reset selected box if any
+            selectedBox = null;
+        }
+    });
+
     // Update the SVG definitions to be more visible
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     defs.style.position = 'absolute';
@@ -334,15 +355,16 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.body.appendChild(defs);
 
-    // Update the tutorial text to include the new feature
+    // Update the tutorial text to include both deletion features
     const tutorialSteps = document.querySelector('.tutorial-steps');
-    const deleteConnectionStep = document.createElement('div');
-    deleteConnectionStep.className = 'step';
-    deleteConnectionStep.innerHTML = `
-        <h3>5. Deleting Connections</h3>
-        <p>Right-click on any connection line to delete it</p>
+    const deleteSteps = document.createElement('div');
+    deleteSteps.className = 'step';
+    deleteSteps.innerHTML = `
+        <h3>5. Deleting</h3>
+        <p>• Right-click on any connection line to delete it</p>
+        <p>• Press Ctrl+X (or Cmd+X) to clear the entire board</p>
     `;
-    tutorialSteps.appendChild(deleteConnectionStep);
+    tutorialSteps.appendChild(deleteSteps);
 
     // Add some CSS for the connection hover effect
     const style = document.createElement('style');

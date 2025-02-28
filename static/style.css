@@ -123,44 +123,46 @@ body {
 }
 
 .modal-content {
-    background-color: #FFFFFF;
-    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 32px;
     border-radius: 16px;
-    max-width: 600px;
+    max-width: 480px;
     width: 90%;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 .modal-content h2 {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
-    margin: 0 0 24px 0;
+    margin: 0 0 16px 0;
     color: #1D1D1F;
 }
 
 .tutorial-steps {
-    margin: 32px 0;
+    margin: 24px 0;
 }
 
 .step {
-    margin: 20px 0;
-    padding: 16px;
-    background-color: #F5F5F7;
-    border-radius: 12px;
+    margin: 12px 0;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
     border: none;
 }
 
 .step h3 {
-    margin: 0 0 8px 0;
+    margin: 0 0 4px 0;
     color: #1D1D1F;
-    font-size: 17px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .step p {
-    margin: 0;
-    color: #515154;
-    font-size: 15px;
+    margin: 0 0 8px 0;
+    color: #86868B;
+    font-size: 14px;
     line-height: 1.4;
 }
 
@@ -168,13 +170,13 @@ body {
     background-color: #000000;
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
-    margin-top: 24px;
-    transition: background-color 0.2s ease;
+    margin-top: 20px;
+    transition: all 0.2s ease;
 }
 
 #start-button:hover {
@@ -183,9 +185,9 @@ body {
 
 .dont-show {
     display: block;
-    margin-top: 16px;
+    margin-top: 12px;
     color: #86868B;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 #help-button {
