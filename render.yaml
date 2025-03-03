@@ -6,7 +6,7 @@ services:
     buildCommand: |
       python -m pip install --upgrade pip
       pip install -r requirements.txt
-    startCommand: gunicorn main:app
+    startCommand: gunicorn wsgi:application
     envVars:
       - key: FLASK_ENV
         value: production
