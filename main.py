@@ -8,3 +8,6 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
+else:
+    # This is for production
+    application = app
