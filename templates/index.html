@@ -1,58 +1,118 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lightweight Workflow</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lightweight Organiser</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="{{ url_for('static', filename='favicon.svg') }}"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A local-first thought canvas. Connect ideas and turn them into a clear task list."
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
     <style>
-        /* Prevent text selection while dragging */
-        .thought-box textarea {
-            pointer-events: auto;
-        }
+      /* Prevent text selection while dragging */
+      .thought-box textarea {
+        pointer-events: auto;
+      }
     </style>
-</head>
-<body>
-    <div id="tutorial-modal" class="modal">
-        <div class="modal-content">
-            <h2>Welcome to Lightweight Workflow!</h2>
-            <div class="tutorial-steps">
-                <div class="step">
-                    <h3>1. Creating Tasks</h3>
-                    <p>Double-click anywhere on the canvas to create a new task box</p>
-                </div>
-                <div class="step">
-                    <h3>2. Moving Tasks</h3>
-                    <p>Click and drag boxes to move them around</p>
-                </div>
-                <div class="step">
-                    <h3>3. Connecting Tasks</h3>
-                    <p>Hold Ctrl and click two boxes to connect them with an arrow</p>
-                </div>
-                <div class="step">
-                    <h3>4. Deleting</h3>
-                    <p>Right-click a box to delete it and its connections</p>
-                </div>
-            </div>
-            <button id="start-button">Got it, let's start!</button>
-            <label class="dont-show">
-                <input type="checkbox" id="dont-show-again">
-                Don't show this again
-            </label>
+  </head>
+  <body>
+    <header class="brand-bar">
+      <div>
+        <span class="eyebrow">A LITTLE CLARITY</span>
+        <h1>Lightweight Organiser</h1>
+        <p>Put it on the canvas. Make the next step clear.</p>
+      </div>
+      <nav aria-label="Board tools">
+        <button id="add-card">+ New card</button><button id="undo">Undo</button
+        ><button id="export-board">Export</button
+        ><label
+          class="import-label"
+          role="button"
+          tabindex="0"
+          aria-label="Import board"
+          >Import<input
+            id="import-board"
+            type="file"
+            accept="application/json,.json"
+        /></label>
+      </nav>
+      <span id="save-status" role="status"></span>
+    </header>
+    <div
+      id="tutorial-modal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tutorial-title"
+    >
+      <div class="modal-content">
+        <h2 id="tutorial-title">Welcome to your thought canvas</h2>
+        <div class="tutorial-steps">
+          <div class="step">
+            <h3>1. Creating Tasks</h3>
+            <p>Double-click anywhere on the canvas to create a new task box</p>
+          </div>
+          <div class="step">
+            <h3>2. Moving Tasks</h3>
+            <p>
+              Drag the edge of a card to move it. Type in the middle to edit it.
+            </p>
+          </div>
+          <div class="step">
+            <h3>3. Connecting Tasks</h3>
+            <p>
+              Click Connect on a parent card, then Connect on another card.
+              Ctrl-click also works.
+            </p>
+          </div>
+          <div class="step">
+            <h3>4. Add detail or remove a card</h3>
+            <p>
+              Use Subtask to make a smaller step. Delete removes a card and its
+              connections; Undo brings it back.
+            </p>
+          </div>
         </div>
+        <button id="start-button">Got it, let's start!</button>
+        <label class="dont-show">
+          <input type="checkbox" id="dont-show-again" />
+          Don't show this again
+        </label>
+      </div>
     </div>
-    <div id="help-button">?</div>
-    <div id="canvas">
-        <!-- Tasks will be added here -->
-    </div>
+    <button id="help-button" aria-label="Open help">?</button>
+    <main id="canvas" aria-label="Task canvas">
+      <!-- Tasks will be added here -->
+    </main>
     <button id="generate-list-button">Generate To-Do List</button>
-    <div id="todo-modal" class="todo-modal">
-        <div class="modal-content">
-            <h2>Your To-Do List</h2>
-            <div id="todo-list-container">
-                <!-- List will be generated here -->
-            </div>
-            <button id="close-todo-button" id="start-button">Close</button>
+    <div
+      id="todo-modal"
+      class="todo-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="todo-title"
+    >
+      <div class="modal-content">
+        <h2 id="todo-title">Your To-Do List</h2>
+        <p class="checklist-note">
+          A working checklist for this session. Generate again to start fresh.
+        </p>
+        <div id="todo-list-container">
+          <!-- List will be generated here -->
         </div>
+        <button id="close-todo-button">Close</button>
+      </div>
     </div>
+    <script src="{{ url_for('static', filename='board-model.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
-</html> 
+  </body>
+</html>

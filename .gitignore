@@ -1,0 +1,21 @@
+
+# Local-only development data
+.DS_Store
+._*
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local.xcconfig
+**/Local.xcconfig
+**/GoogleService-Info.plist
+**/xcuserdata/
+**/*.xcuserstate
+.venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+*.tsbuildinfo
+*.log
+.playwright-cli/
+output/playwright/

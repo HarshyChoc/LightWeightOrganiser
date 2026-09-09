@@ -1,390 +1,598 @@
 body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    background-color: #FFFFFF;
-    color: #1D1D1F;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+    sans-serif;
+  background-color: #ffffff;
+  color: #1d1d1f;
 }
 
 #canvas {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background-color: #FBFBFD;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #fbfbfd;
+  overflow: hidden;
 }
 
 .thought-box {
-    position: absolute;
-    min-width: 180px;
-    min-height: 100px;
-    background-color: #FFFFFF;
-    border: 1px solid #E5E5E7;
-    border-radius: 12px;
-    padding: 16px;
-    cursor: move;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    user-select: none;
+  position: absolute;
+  min-width: 180px;
+  min-height: 100px;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e7;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: move;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  user-select: none;
 }
 
 .thought-box.subtask {
-    min-width: 160px;
-    min-height: 80px;
-    background-color: #F0F0F0;
-    border-color: #D0D0D0;
-    padding: 12px;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+  min-width: 160px;
+  min-height: 80px;
+  background-color: #f0f0f0;
+  border-color: #d0d0d0;
+  padding: 12px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
 }
 
 .thought-box.subtask textarea {
-    font-size: 13px;
-    background-color: #F0F0F0;
-    color: #515154;
+  font-size: 13px;
+  background-color: #f0f0f0;
+  color: #515154;
 }
 
 .thought-box.subtask:hover {
-    transform: scale(0.92) translateY(-1px);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transform: scale(0.92) translateY(-1px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 /* Add hover state for textarea to match box hover */
 .thought-box.subtask:hover textarea {
-    background-color: #F0F0F0;
+  background-color: #f0f0f0;
 }
 
 /* Regular thought box hover */
 .thought-box:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
 }
 
 .thought-box textarea {
-    width: 100%;
-    height: 100%;
-    border: none;
-    resize: none;
-    outline: none;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #1D1D1F;
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #1d1d1f;
 }
 
 .thought-box textarea::placeholder {
-    color: #86868B;
+  color: #86868b;
 }
 
 .connection-point {
-    width: 10px;
-    height: 10px;
-    background-color: #666;
-    border-radius: 50%;
-    position: absolute;
-    cursor: pointer;
+  width: 10px;
+  height: 10px;
+  background-color: #666;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
 }
 
-.connection-point.top { top: -5px; left: 50%; transform: translateX(-50%); }
-.connection-point.right { right: -5px; top: 50%; transform: translateY(-50%); }
-.connection-point.bottom { bottom: -5px; left: 50%; transform: translateX(-50%); }
-.connection-point.left { left: -5px; top: 50%; transform: translateY(-50%); }
+.connection-point.top {
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.connection-point.right {
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.connection-point.bottom {
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.connection-point.left {
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .arrow {
-    position: absolute;
-    pointer-events: none;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: visible;
-    will-change: transform;
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: visible;
+  will-change: transform;
 }
 
 .arrow path {
-    pointer-events: stroke;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  pointer-events: stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
 }
 
 .modal-content {
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 32px;
-    border-radius: 16px;
-    max-width: 480px;
-    width: 90%;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .modal-content h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 16px 0;
-    color: #1D1D1F;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #1d1d1f;
 }
 
 .tutorial-steps {
-    margin: 24px 0;
+  margin: 24px 0;
 }
 
 .step {
-    margin: 12px 0;
-    padding: 0;
-    background-color: transparent;
-    border-radius: 0;
-    border: none;
+  margin: 12px 0;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  border: none;
 }
 
 .step h3 {
-    margin: 0 0 4px 0;
-    color: #1D1D1F;
-    font-size: 15px;
-    font-weight: 500;
+  margin: 0 0 4px 0;
+  color: #1d1d1f;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .step p {
-    margin: 0 0 8px 0;
-    color: #86868B;
-    font-size: 14px;
-    line-height: 1.4;
+  margin: 0 0 8px 0;
+  color: #86868b;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 #start-button {
-    background-color: #000000;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 20px;
-    transition: all 0.2s ease;
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+  transition: all 0.2s ease;
 }
 
 #start-button:hover {
-    background-color: #1D1D1F;
+  background-color: #1d1d1f;
 }
 
 .dont-show {
-    display: block;
-    margin-top: 12px;
-    color: #86868B;
-    font-size: 12px;
+  display: block;
+  margin-top: 12px;
+  color: #86868b;
+  font-size: 12px;
 }
 
 #help-button {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 44px;
-    height: 44px;
-    background-color: rgba(0,0,0,0.8);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 20px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    transition: all 0.2s ease;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
 }
 
 #help-button:hover {
-    background-color: rgba(0,0,0,0.9);
-    transform: scale(1.05);
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
 }
 
 #generate-list-button {
-    position: fixed;
-    bottom: 24px;
-    left: 24px;
-    padding: 12px 24px;
-    background-color: rgba(0,0,0,0.8);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    transition: all 0.2s ease;
-    z-index: 100;
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  padding: 12px 24px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+  z-index: 100;
 }
 
 #generate-list-button:hover {
-    background-color: rgba(0,0,0,0.9);
-    transform: scale(1.02);
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: scale(1.02);
 }
 
 .todo-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 1000;
-    backdrop-filter: blur(5px);
-    justify-content: center;
-    align-items: center;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
 }
 
 .todo-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    background: #FBFBFD;
-    border-radius: 12px;
-    overflow: hidden;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #fbfbfd;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .todo-item {
-    padding: 16px;
-    border-bottom: 1px solid #E5E5E7;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    background: white;
+  padding: 16px;
+  border-bottom: 1px solid #e5e5e7;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: white;
 }
 
 .todo-item.main-task {
-    background: #FBFBFD;
-    font-weight: 500;
-    font-size: 16px;
-    border-left: 4px solid #000000;
+  background: #fbfbfd;
+  font-weight: 500;
+  font-size: 16px;
+  border-left: 4px solid #000000;
 }
 
 /* Remove these bullet point styles */
 .todo-item.main-task::before,
 .todo-item.subtask::before {
-    display: none;
+  display: none;
 }
 
 .todo-item.subtask {
-    padding-left: 48px;
-    background-color: #F8F8F8;
-    font-size: 14px;
-    margin-left: 24px;
-    border-left: 1px solid #E5E5E7;
+  padding-left: 48px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  margin-left: 24px;
+  border-left: 1px solid #e5e5e7;
 }
 
 .todo-text-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .todo-text {
-    flex-grow: 1;
-    line-height: 1.4;
+  flex-grow: 1;
+  line-height: 1.4;
 }
 
 .todo-item.completed .todo-text {
-    text-decoration: line-through;
-    color: #86868B;
+  text-decoration: line-through;
+  color: #86868b;
 }
 
 .todo-checkbox {
-    min-width: 20px;
-    height: 20px;
-    border: 2px solid #1D1D1F;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
-}
-
-.todo-checkbox.checked {
-    background-color: #1D1D1F;
-}
-
-.todo-checkbox.checked::after {
-    content: "✓";
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 12px;
+  appearance: auto;
+  accent-color: #244f40;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  cursor: pointer;
 }
 
 .task-number {
-    color: #86868B;
-    font-size: 13px;
-    font-weight: normal;
-    margin-left: 8px;
+  color: #86868b;
+  font-size: 13px;
+  font-weight: normal;
+  margin-left: 8px;
 }
 
 .subtask-count {
-    font-size: 13px;
-    color: #86868B;
-    margin-top: 4px;
+  font-size: 13px;
+  color: #86868b;
+  margin-top: 4px;
 }
 
 #close-todo-button {
-    background-color: #000000;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    margin-top: 24px;
-    transition: background-color 0.2s ease;
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 24px;
+  transition: background-color 0.2s ease;
 }
 
 #close-todo-button:hover {
-    background-color: #1D1D1F;
+  background-color: #1d1d1f;
 }
 
 .context-menu {
-    position: fixed;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    padding: 8px 0;
-    min-width: 160px;
-    z-index: 1000;
-    opacity: 0;
-    transform: scale(0.95);
-    transition: all 0.2s ease;
+  position: fixed;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 8px 0;
+  min-width: 160px;
+  z-index: 1000;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.2s ease;
 }
 
 .context-menu.active {
-    opacity: 1;
-    transform: scale(1);
+  opacity: 1;
+  transform: scale(1);
 }
 
 .context-menu-item {
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #1D1D1F;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #1d1d1f;
 }
 
 .context-menu-item:hover {
-    background-color: #F5F5F7;
-} 
+  background-color: #f5f5f7;
+} /* Public release: clear tools, quiet canvas, keyboard-visible controls. */
+body {
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #f4f5ee;
+  color: #203c32;
+}
+#canvas {
+  background-color: #f4f5ee;
+  background-image: radial-gradient(#ccd8ce 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.brand-bar {
+  position: fixed;
+  left: 28px;
+  right: 28px;
+  top: 24px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+.brand-bar > * {
+  pointer-events: auto;
+}
+.brand-bar h1 {
+  font-size: 24px;
+  letter-spacing: -0.04em;
+  margin: 4px 0;
+}
+.brand-bar p {
+  font-size: 12px;
+  color: #637168;
+  margin: 0;
+}
+.eyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #56876d;
+}
+.brand-bar nav {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+button,
+.import-label {
+  font: inherit;
+  cursor: pointer;
+}
+.brand-bar button,
+.import-label {
+  font-size: 12px;
+  border: 1px solid #cbd7cb;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #203c32;
+}
+.brand-bar #add-card {
+  background: #244f40;
+  color: white;
+  border-color: #244f40;
+}
+.import-label input {
+  display: none;
+}
+#save-status {
+  width: 100%;
+  font-size: 11px;
+  color: #5a7566;
+}
+.thought-box {
+  border: 1px solid #d0dbd0;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px #203c3210;
+  background: #fff;
+}
+.thought-box textarea {
+  font-family: inherit;
+  color: #244438;
+}
+.thought-box:focus-within {
+  outline: 2px solid #8bbf9d;
+}
+button:focus-visible,
+.import-label:focus-within {
+  outline: 3px solid #9abb88;
+  outline-offset: 3px;
+}
+.modal-content {
+  border-radius: 18px;
+  border: 1px solid #d5dfd2;
+  box-shadow: 0 20px 100px #18302326;
+}
+#generate-list-button {
+  background: #244f40;
+  color: white;
+  border: 0;
+  border-radius: 12px;
+  font-size: 14px;
+  box-shadow: 0 8px 30px #203c3220;
+}
+#help-button {
+  top: auto;
+  bottom: 24px;
+  background: #fff;
+  border: 1px solid #cbd7cb;
+  color: #244f40;
+}
+.todo-text {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .brand-bar {
+    left: 16px;
+    right: 16px;
+    top: 16px;
+    gap: 10px;
+  }
+  .brand-bar h1 {
+    font-size: 20px;
+  }
+  .brand-bar nav {
+    margin-left: 0;
+    width: 100%;
+  }
+  .brand-bar button,
+  .import-label {
+    padding: 8px 11px;
+  }
+  .modal-content {
+    max-height: 85vh;
+    overflow: auto;
+  }
+  .thought-box {
+    min-width: 140px;
+  }
+}
+
+#canvas {
+  overflow: auto;
+}
+.thought-box {
+  z-index: 2;
+  width: 210px;
+}
+.thought-box textarea {
+  display: block;
+  height: 80px;
+}
+.thought-box.subtask {
+  width: 180px;
+}
+.thought-box.subtask:hover {
+  transform: none;
+}
+.thought-box.subtask textarea {
+  height: 60px;
+}
+.card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+.card-actions button {
+  padding: 4px 6px;
+  font-size: 10px;
+  color: #526d5d;
+  background: #f4f6f0;
+  border: 1px solid #dce4d8;
+  border-radius: 5px;
+}
+.card-actions .card-delete {
+  margin-left: auto;
+}
+button:focus-visible,
+input:focus-visible,
+.import-label:focus-visible {
+  outline: 3px solid #739d58;
+  outline-offset: 3px;
+}
+.modal-content {
+  box-sizing: border-box;
+  max-height: 85vh;
+  overflow: auto;
+}
+.checklist-note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #637168;
+}
+
+#help-button {
+  z-index: 100;
+}
